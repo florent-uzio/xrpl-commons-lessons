@@ -3,13 +3,14 @@ import { convertCurrencyCode, isTxnSuccessful } from "./helpers"
 
 // https://xrpl.org/public-servers.html#public-servers
 const TESTNET_RIPPLE = "wss://s.altnet.rippletest.net:51233"
-const TESTNET_XRPLLABS = "wss://testnet.xrpl-labs.com/"
+const TESTNET_XRPLLABS = "wss://testnet.xrpl-labs.com"
+const DEVNET_RIPPLE = "wss://s.devnet.rippletest.net:51233"
 
 // The custom token the issuer will mint and that the user account will hold
 const TOKEN = "IRON_MAN"
 
 const main = async () => {
-  const client = new Client(TESTNET_XRPLLABS)
+  const client = new Client(DEVNET_RIPPLE)
 
   // Connect the client to the network
   await client.connect()
@@ -26,6 +27,8 @@ const main = async () => {
    * Step 1a - Allow Rippling on the issuer account.
    * This will allow multiple users holding "IRON_MAN" to send it to each other.
    */
+  console.log("Sending the AccountSet to enable Rippling on the issuer account...")
+
   const accountSet: AccountSet = {
     Account: issuerWallet.address,
     TransactionType: "AccountSet",
@@ -56,6 +59,8 @@ const main = async () => {
    * Step 2a - Create trustline from the user account to the issuer account.
    * Your user account will trust the issuer account and accept to hold and receive "IRON_MAN".
    */
+  console.log("Sending the TrustSet from the user to the issuer account...")
+
   const trustset: TrustSet = {
     Account: userWallet.address,
     TransactionType: "TrustSet",

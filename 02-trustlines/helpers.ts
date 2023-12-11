@@ -19,3 +19,10 @@ export const isTxnSuccessful = (result: TxResponse) => {
   if (typeof meta === "string" || !meta) return false
   return meta.TransactionResult === "tesSUCCESS"
 }
+
+export const getExplorerType = (url: string) => {
+  if (url.includes("altnet") || url.includes("testnet")) {
+    return "testnet"
+  }
+  return "devnet"
+}

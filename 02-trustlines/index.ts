@@ -1,5 +1,5 @@
 import { AccountSet, AccountSetAsfFlags, Client, Payment, TrustSet } from "xrpl"
-import { convertCurrencyCode, isTxnSuccessful } from "./helpers"
+import { convertCurrencyCode, getExplorerType, isTxnSuccessful } from "./helpers"
 
 // https://xrpl.org/public-servers.html#public-servers
 const TESTNET_RIPPLE = "wss://s.altnet.rippletest.net:51233"
@@ -119,8 +119,14 @@ const main = async () => {
 
   console.log(paymentResponse)
   console.log()
-  console.log(`Issuer details: https://testnet.xrpl.org/accounts/${issuerWallet.address}`)
-  console.log(`User details: https://testnet.xrpl.org/accounts/${userWallet.address}`)
+  console.log(
+    `Issuer details: https://${getExplorerType(client.url)}.xrpl.org/accounts/${
+      issuerWallet.address
+    }`,
+  )
+  console.log(
+    `User details: https://${getExplorerType(client.url)}.xrpl.org/accounts/${userWallet.address}`,
+  )
 
   await client.disconnect()
 }

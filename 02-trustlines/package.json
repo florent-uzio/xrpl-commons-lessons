@@ -1,0 +1,20 @@
+{
+  "name": "02-trustlines",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "xrpl": "^2.14.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.1",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "ts-node": "^10.9.2"
+  }
+}

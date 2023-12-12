@@ -1,4 +1,5 @@
 import crypto from "crypto"
+// @ts-expect-error no types available
 import cc from "five-bells-condition"
 
 export const generateConditionAndFulfillment = () => {
@@ -22,6 +23,6 @@ export const generateConditionAndFulfillment = () => {
 
   return {
     condition,
-    fulfillment,
+    fulfillment: fulfillment_hex,
   }
 }

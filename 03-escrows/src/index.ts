@@ -25,10 +25,13 @@ const main = async () => {
    * Step 2 - Create the escrow
    */
 
+  // Time after which the destination user can claim the funds
   const WAITING_TIME = 10 // seconds
 
   // Define the time from when the Destination wallet can claim the money in the escrow. So here it would be 10 seconds after the escrow creation.
   const finishAfter = dayjs().add(WAITING_TIME, "seconds").toISOString()
+
+  // Generate the condition and fulfillment
   const { condition, fulfillment } = generateConditionAndFulfillment()
 
   const escrowCreateResponse = await createEscrow({
@@ -44,6 +47,7 @@ const main = async () => {
     wallet: walletOne,
   })
 
+  // We need the sequence to finish an escrow, if it is not there, stop the function
   if (!escrowCreateResponse.result.Sequence) {
     await client.disconnect()
     return

@@ -15,4 +15,4 @@ npm install
 npm start
 ```
 
-`npm start` will execute the content of `index.ts`.
+`npm start` will execute the content of `src/index.ts`.

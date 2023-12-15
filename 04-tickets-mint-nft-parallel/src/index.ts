@@ -11,11 +11,12 @@ const main = async () => {
 
   await client.connect()
 
+  // Create wallet
   const { wallet: minterWallet } = await client.fundWallet()
-
+  console.log("**** Wallet created ****")
   console.log(minterWallet)
 
-  const TOTAL_MINTS = 20
+  const TOTAL_MINTS = 30
 
   /**
    * Step 1 - Create tickets
@@ -34,30 +35,23 @@ const main = async () => {
   console.log(response)
 
   /**
-   * {
-        "Account": "rain7iUZ7EmqeXa5z6pYbTsHNnBcmJEjit",
-        "Flags": 0,
-        "LedgerEntryType": "Ticket",
-        "OwnerNode": "0",
-        "PreviousTxnID": "35AA9842CA72E34B215A9C41D428C0E5F15E5A41D041D193EAD5BA8CA737CA1C",
-        "PreviousTxnLgrSeq": 43736919,
-        "TicketSequence": 43736920,
-        "index": "E3BCBA6D2D8A534B1031C5F0B7C92A624F23E6FFD8F81DEB3778CFF21E3015FC"
-      },
-   */
-
-  /**
    * Step 2 - Mint {{ TOTAL_MINT }} NFTs in parallel
    */
 
-  //   Fetch the ticket sequences
+  /**
+   * Fetch the tickets available in the minter account.
+   * https://xrpl.org/account_objects.html#account_objects
+   */
   const ticketsResponse = await client.request({
     account: minterWallet.address,
     command: "account_objects",
     type: "ticket",
   })
+
+  // More information about the Ticket object at https://xrpl.org/ticket.html#ticket
   const tickets = ticketsResponse.result.account_objects as Ticket[]
 
+  console.log()
   console.log("**** Tickets available in the minter wallet ****")
   console.log(JSON.stringify(tickets, null, 2))
 
@@ -73,8 +67,8 @@ const main = async () => {
       TicketSequence: ticket.TicketSequence,
       Sequence: 0,
     }
-    // const { tx_blob } = minterWallet.sign(nftMint)
-    return client.submit(nftMint, { autofill: true, wallet: minterWallet })
+
+    return client.submitAndWait(nftMint, { autofill: true, wallet: minterWallet })
   })
 
   const mints = await Promise.all(nftMintsPromises)

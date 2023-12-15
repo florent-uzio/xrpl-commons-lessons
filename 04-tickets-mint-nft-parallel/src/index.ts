@@ -62,10 +62,10 @@ const main = async () => {
       URI: convertStringToHex(
         "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWRrYmw0c3hjNGo2bzFmMmZuZnB1Y2NwM2k4YWhjcHE4MzkwdjZhbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GlWeBb6U3R1PpjH9VV/giphy.gif",
       ),
-      Flags: NFTokenMintFlags.tfTransferable,
+      Flags: NFTokenMintFlags.tfTransferable, // Allows to create offers and sell the NFT to other wallets.
       NFTokenTaxon: 0,
       TicketSequence: ticket.TicketSequence,
-      Sequence: 0,
+      Sequence: 0, // Make sure to set the Sequence to 0
     }
 
     return client.submitAndWait(nftMint, { autofill: true, wallet: minterWallet })

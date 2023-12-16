@@ -16,15 +16,13 @@ const main = async () => {
   console.log("**** Wallet created ****")
   console.log(minterWallet)
 
-  const TOTAL_MINTS = 30
-
   /**
    * Step 1 - Create tickets
    */
   const ticketCreate: TicketCreate = {
     Account: minterWallet.address,
     TransactionType: "TicketCreate",
-    TicketCount: TOTAL_MINTS,
+    TicketCount: 30,
   }
 
   const response = await client.submitAndWait(ticketCreate, {
